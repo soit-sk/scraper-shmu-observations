@@ -24,9 +24,13 @@ work-in-progress
 ## How to run
 
 `python3 -m venv .venv`
+
 `source .venv/bin/activate`
+
 `pip install -U pip` # optional step
+
 `pip install -r requirements.txt`
+
 `python scraper.py`
 
 # License
@@ -40,7 +44,6 @@ This is a scraper that runs on [Morph](https://morph.io).  To get started
 
 # TODO
 
-* step 1
-* step 2
+* step 2 - works, but make it configurable
 * step 3
 * ...
