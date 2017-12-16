@@ -48,6 +48,15 @@ MIN_TIME_BETWEEN_REQUESTS = datetime.timedelta(seconds=1)
 last_request_time = datetime.datetime.utcnow() \
     - MIN_TIME_BETWEEN_REQUESTS
 
+# If true, scraper will run only for 20 hours at most. Usefull to check
+# "auto run" on Morph.io ("Automatically run this scraper once per day").
+# Can be disabled via command line with --no-time-limit .
+# Note: With value of 20h, scrapper is stalling while running on Morph.io
+# (errors like "Morph internal error: read timeout reached Stopping current
+# container and requeueing").  Thus I'm trying to lower thew run time to 4h.
+time_limited_run = True
+time_limit = 3 * 60 * 60
+
 
 def get_one(shmu_datetime):
     """
@@ -176,6 +185,8 @@ def process_whole(period):
     retuns nothing so far
     """
     
+    start_time = time.time()
+    
     # SHMU seems to have two year history and timestamps in UTC.  We're not
     # going to use anything bellow seconds, so whatever is there, does not
     # matter much.
@@ -207,6 +218,11 @@ def process_whole(period):
             scrap_current.replace(microsecond=0).isoformat())
 
         scrap_current += datetime.timedelta(hours=1)
+        
+        current_time = time.time()
+        if time_limited_run and (current_time - start_time) >= time_limit:
+            print('### time limit reached (%d s) => ending' % time_limit)
+            break
     
     print("### done: %d observations downloaded" % item_count)
 
