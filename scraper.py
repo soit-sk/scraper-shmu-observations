@@ -85,7 +85,7 @@ def get_one(shmu_datetime):
     
     # get the adta
     request_url = REQUEST_URL + shmu_datetime
-    print("### getting %s ..." % request_url)
+    #print("### getting %s ..." % request_url)
     h = httplib2.Http(".cache")
     (resp_headers, content) = h.request(request_url, "GET")
     data = content.decode()
@@ -101,7 +101,7 @@ def get_one(shmu_datetime):
             print("### creating %s" % pn)
             os.makedirs(pn)
         # write
-        print("### writing copy of data into %s" % fn)
+        #print("### writing copy of data into %s" % fn)
         f = open(fn, 'w')
         f.write(data)
         f.close()
