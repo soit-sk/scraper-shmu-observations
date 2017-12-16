@@ -44,6 +44,5 @@ This is a scraper that runs on [Morph](https://morph.io).  To get started
 
 # TODO
 
-* step 2 - works, but make it configurable
 * step 3
 * ...

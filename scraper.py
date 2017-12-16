@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/python
 # -*- coding: utf-8 -*-
 #
 # Copyright (c) 2017, Peter Hanecak <hanecak@opendata.sk>
@@ -29,7 +29,7 @@ import csv
 import datetime
 import httplib2
 import os
-#import scraperwiki
+import scraperwiki
 import time
 
 
@@ -41,6 +41,8 @@ COPY_PERIOD = 2 * 365	# two years, roughly
 # FIXME: make sure to turn it off for runs o Morph.io
 KEEP_CSV_COPY = True
 CSV_COPY_FN_PATTERN = './shmu-observations-%Y%m/shmu-observations-%Y%m%d-%H.csv'
+
+VAR_LATEST_OBSERVATION = 'latest_observation'
 
 # for now hack: a global variable used to throttle amount of requests
 MIN_TIME_BETWEEN_REQUESTS = datetime.timedelta(seconds=1)
@@ -141,11 +143,16 @@ def process_whole(period):
         # let's say they are able to collect the measurements in less then 10 minuts
     scrap_start = scrap_end \
         - datetime.timedelta(days=period)
-    print("XXX going to download data from %s to %s" % (scrap_start, scrap_end))
     
-    # determine wehre we've ended up last time running and start from there
-    # ... override then scrap_start
+    # determine where we've ended up last time running and start from there
+    latest_observation = scraperwiki.sqlite.get_var(VAR_LATEST_OBSERVATION)
+    if latest_observation is not None:
+        scrap_start = datetime.datetime.strptime(latest_observation, "%Y-%m-%dT%H:%M:%S")
+        print("### resuming download from %s" % scrap_start)
+        # This means we'll donwload the latest observation once again.
+        # Let's call that safety margin.
 
+    print("### going to download data from %s to %s" % (scrap_start, scrap_end))
     item_count = 0
     scrap_current = scrap_start
     while (scrap_current <= scrap_end):
@@ -153,9 +160,14 @@ def process_whole(period):
         shmu_datetime = scrap_current.strftime('%d.%m.%Y:%H')
         process_one(shmu_datetime)
         item_count += 1
+        
+        # remember what we've already scrapped, so that we do not download it again on next run
+        scraperwiki.sqlite.save_var(VAR_LATEST_OBSERVATION,
+            scrap_current.replace(microsecond=0).isoformat())
+
         scrap_current += datetime.timedelta(hours=1)
     
-    print("XXX done: %d observations downloaded" % item_count)
+    print("### done: %d observations downloaded" % item_count)
 
 
 process_whole(COPY_PERIOD)
