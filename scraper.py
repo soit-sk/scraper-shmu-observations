@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 #
-# Copyright (c) 2016, Peter Hanecak <hanecak@opendata.sk>
+# Copyright (c) 2017, Peter Hanecak <hanecak@opendata.sk>
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
