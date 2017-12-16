@@ -21,6 +21,14 @@ TODO: link to SHMU data documentation
 
 work-in-progress
 
+## How to run
+
+`python3 -m venv .venv`
+`source .venv/bin/activate`
+`pip install -U pip` # optional step
+`pip install -r requirements.txt`
+`python scraper.py`
+
 # License
 
 Scraper is licensed under BSD license, see [full text of license](LICENSE).
