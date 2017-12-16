@@ -38,6 +38,7 @@ REQUEST_URL = 'http://meteo.shmu.sk/customer/home/opendata/?observations;date=' 
 COPY_PERIOD = 2 * 365	# two years, roughly
 
 #KEEP_CSV_COPY = False
+# FIXME: make sure to turn it off for runs o Morph.io
 KEEP_CSV_COPY = True
 CSV_COPY_FN_PATTERN = './shmu-observations-%Y%m/shmu-observations-%Y%m%d-%H.csv'
 
