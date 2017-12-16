@@ -31,6 +31,7 @@ import httplib2
 import os
 import scraperwiki
 import time
+from StringIO import StringIO
 
 
 REQUEST_URL = 'http://meteo.shmu.sk/customer/home/opendata/?observations;date=' # + 'DD.MM.YYYY:HH'
@@ -101,6 +102,21 @@ def get_one(shmu_datetime):
     return data
 
 
+def fix_value(value):
+    """
+    Missing values are repesened by "null" - we need to convert those to None.
+    
+    SHMU is also pretty priting CSV, so we need to strip leading and
+    trailing white space from values.
+    """
+    
+    svalue = value.strip()
+    if (svalue == "null"):
+        return None
+    
+    return svalue
+
+
 def process_one(shmu_datetime):
     """
     Get a CSV with observations for specified date and time and put it into
@@ -111,16 +127,43 @@ def process_one(shmu_datetime):
     returns nothing so far
     """
     
+    # get the data
     data = get_one(shmu_datetime)
-    # TODO: enumerate over CSV data in 'data' and store that into SQLite file
-    #scraperwiki.sqlite.save(
-    #    unique_keys=['obs_stn', 'datetime'],
-    #    data={
-    #        'obs_stn': obs_stn,
-    #        ...
-    #        'scrap_time': datetime.datetime.utcnow().replace(microsecond=0).isoformat()
-    #    }
-    #)
+    
+    # parse the CSV
+    f = StringIO(data)
+    reader = csv.reader(f, delimiter=';')
+    
+    # store data from CSV into SQLite
+    item_count = 0
+    for row in reader:
+        # skip header
+        if (row[1] == 'cccc'):
+            continue
+
+        scraperwiki.sqlite.save(
+            unique_keys = ['obs_stn', 'date'],
+            data = {
+                'obs_stn':	row[0],
+                'cccc':		row[1].strip(),
+                'name':		row[2].strip(),
+                'lat':		row[3],
+                'lon':		row[4],
+                'elev':		row[5].strip(),
+                'date':		row[6],
+                'ta_2m':	fix_value(row[7]),
+                'pa':		fix_value(row[8]),
+                'rh':		fix_value(row[9]),
+                'pr_1h':	fix_value(row[10]),
+                'ws_avg':	fix_value(row[11]),
+                'wd_avg':	fix_value(row[12]),
+                'scrap_time': datetime.datetime.utcnow().replace(microsecond=0).isoformat()
+            }
+        )
+        item_count += 1
+    
+    f.close()
+    print("### processed %d items for %s" % (item_count, shmu_datetime))
     
     return
 

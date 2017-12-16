@@ -11,7 +11,7 @@ usual one" (thanks to REST and CSV, its job would be much easier compared to
 
 1. crawl all data
 2. (optionaly) keep local copy of CSV snapshots
-3. cmopile all snapshots into one SQLite database
+3. compile all snapshots into one SQLite database
 
 ## Data
 
@@ -44,5 +44,4 @@ This is a scraper that runs on [Morph](https://morph.io).  To get started
 
 # TODO
 
-* step 3
 * ...
