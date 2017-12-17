@@ -55,7 +55,7 @@ last_request_time = datetime.datetime.utcnow() \
 # (errors like "Morph internal error: read timeout reached Stopping current
 # container and requeueing").  Thus I'm trying to lower thew run time to 4h.
 time_limited_run = True
-time_limit = 3 * 60 * 60
+time_limit = 6 * 60 * 60
 
 
 def get_one(shmu_datetime):
