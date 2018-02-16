@@ -1,7 +1,7 @@
 # SHMU Environment Observation Data
 
 SHMU made available for [DanubeHack 3.0](http://danubehack.eu/) some
-environment obeservation data at:
+environment observation data at:
 
 http://meteo.shmu.sk/customer/home/opendata/
 
@@ -10,7 +10,7 @@ usual one" (thanks to REST and CSV, its job would be much easier compared to
 [other scrapers](https://morph.io/soit-sk/)):
 
 1. crawl all data
-2. (optionaly) keep local copy of CSV snapshots
+2. (optionally) keep local copy of CSV snapshots
 3. compile all snapshots into one SQLite database
 
 ## Data
