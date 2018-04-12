@@ -15,7 +15,9 @@ usual one" (thanks to REST and CSV, its job would be much easier compared to
 
 ## Data
 
-TODO: link to SHMU data documentation
+- source: http://meteo.shmu.sk/customer/home/opendata/
+- data license: CC-BY
+- reference: https://data.gov.sk/dataset/atmosfericke-podmienky-a-meteorologicke-geograficke-prvky
 
 ## Status
 
