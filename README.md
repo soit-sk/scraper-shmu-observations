@@ -21,7 +21,7 @@ usual one" (thanks to REST and CSV, its job would be much easier compared to
 
 ## Status
 
-work-in-progress
+works
 
 ## How to run
 
