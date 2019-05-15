@@ -31,7 +31,7 @@ import httplib2
 import os
 import scraperwiki
 import time
-from io import StringIO
+from StringIO import StringIO
 
 
 REQUEST_URL = 'http://meteo.shmu.sk/customer/home/opendata/?observations;date=' # + 'DD.MM.YYYY:HH'
