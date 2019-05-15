@@ -8,3 +8,4 @@
 alembic
 httplib2
 six
+urllib2
