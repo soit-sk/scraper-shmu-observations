@@ -48,12 +48,12 @@ MIN_TIME_BETWEEN_REQUESTS = datetime.timedelta(seconds=1)
 last_request_time = datetime.datetime.utcnow() \
     - MIN_TIME_BETWEEN_REQUESTS
 
-# If true, scraper will run only for 20 hours at most. Usefull to check
+# If true, scraper will run only for 20 hours at most. Useful to check
 # "auto run" on Morph.io ("Automatically run this scraper once per day").
 # Can be disabled via command line with --no-time-limit .
 # Note: With value of 20h, scrapper is stalling while running on Morph.io
 # (errors like "Morph internal error: read timeout reached Stopping current
-# container and requeueing").  Thus I'm trying to lower thew run time to 4h.
+# container and requeueing").  Thus I'm trying to lower the run time to 4h.
 time_limited_run = True
 time_limit = 6 * 60 * 60
 
@@ -83,7 +83,7 @@ def get_one(shmu_datetime):
         time.sleep(sleep_time.total_seconds())
     last_request_time = datetime.datetime.utcnow()
     
-    # get the adta
+    # get the data
     request_url = REQUEST_URL + shmu_datetime
     #print("### getting %s ..." % request_url)
     h = httplib2.Http(".cache")
@@ -111,9 +111,9 @@ def get_one(shmu_datetime):
 
 def fix_value(value):
     """
-    Missing values are repesened by "null" - we need to convert those to None.
+    Missing values are repesented by "null" - we need to convert those to None.
     
-    SHMU is also pretty priting CSV, so we need to strip leading and
+    SHMU is also pretty printing CSV, so we need to strip leading and
     trailing white space from values.
     """
     
@@ -177,12 +177,12 @@ def process_one(shmu_datetime):
 
 def process_whole(period):
     """
-    Make a 1:1 copy of SHMU data into lcoal SQLite DB, going back 'period'
+    Make a 1:1 copy of SHMU data into local SQLite DB, going back 'period'
     days.
     
     period: how many days to go back
     
-    retuns nothing so far
+    returns nothing so far
     """
     
     start_time = time.time()
@@ -192,7 +192,7 @@ def process_whole(period):
     # matter much.
     scrap_end = datetime.datetime.utcnow() \
         - datetime.timedelta(minutes=10)
-        # let's say they are able to collect the measurements in less then 10 minuts
+        # let's say they are able to collect the measurements in less then 10 minutes
     scrap_start = scrap_end \
         - datetime.timedelta(days=period)
     
@@ -201,7 +201,7 @@ def process_whole(period):
     if latest_observation is not None:
         scrap_start = datetime.datetime.strptime(latest_observation, "%Y-%m-%dT%H:%M:%S")
         print("### resuming download from %s" % scrap_start)
-        # This means we'll donwload the latest observation once again.
+        # This means we'll download the latest observation once again.
         # Let's call that safety margin.
 
     print("### going to download data from %s to %s" % (scrap_start, scrap_end))
