@@ -4,4 +4,7 @@ scraperwiki.sqlite
 *.csv
 # Python, pip, ... stuff
 .cache/
+.project
+.pydevproject
+.settings/
 .venv/
