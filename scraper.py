@@ -213,6 +213,9 @@ def process_whole(period):
         process_one(shmu_datetime)
         item_count += 1
         
+        # FIXME: After migrating to Pyhont3 and admarinber's fork of scraperwiki save_var()
+        # is getting stuck. For now this is a workaround:
+        scraperwiki.sqlite.commit_transactions()
         # remember what we've already scrapped, so that we do not download it again on next run
         scraperwiki.sqlite.save_var(VAR_LATEST_OBSERVATION,
             scrap_current.replace(microsecond=0).isoformat())
