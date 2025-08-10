@@ -192,7 +192,7 @@ def process_whole(period):
     # matter much.
     scrap_end = datetime.datetime.utcnow() \
         - datetime.timedelta(minutes=10)
-        # let's say they are able to collect the measurements in less then 10 minuts
+        # let's say they are able to collect the measurements in less then 10 minutes
     scrap_start = scrap_end \
         - datetime.timedelta(days=period)
     
@@ -201,7 +201,7 @@ def process_whole(period):
     if latest_observation is not None:
         scrap_start = datetime.datetime.strptime(latest_observation, "%Y-%m-%dT%H:%M:%S")
         print("### resuming download from %s" % scrap_start)
-        # This means we'll donwload the latest observation once again.
+        # This means we'll download the latest observation once again.
         # Let's call that safety margin.
 
     print("### going to download data from %s to %s" % (scrap_start, scrap_end))
