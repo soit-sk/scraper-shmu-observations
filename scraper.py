@@ -34,7 +34,7 @@ import time
 from io import StringIO
 
 
-REQUEST_URL = 'http://meteo.shmu.sk/customer/home/opendata/?observations;date=' # + 'DD.MM.YYYY:HH'
+REQUEST_URL = 'https://meteo.shmu.sk/customer/home/opendata/?observations;date=' # + 'DD.MM.YYYY:HH'
 
 COPY_PERIOD = 2 * 365	# two years, roughly
 
